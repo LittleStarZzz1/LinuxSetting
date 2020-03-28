@@ -1,0 +1,4 @@
+makefile
+minishell
+minishell.c
+test.txt
