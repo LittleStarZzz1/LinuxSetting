@@ -6,6 +6,8 @@
 #include <arpa/inet.h>//字节序转换
 
 #define MAX_LISTEN 5
+#define CHECK_RET(q) if((q)==false){return -1;}
+
 
 class TcpSocket
 {
@@ -115,7 +117,7 @@ public:
     }
 
     //发送数据
-    bool SendData(const std::string& data);
+    bool SendData(const std::string& data)
     {
         int ret = send(_sockfd, data.c_str(), data.size(), 0);
 
@@ -150,7 +152,7 @@ public:
     }
 
     //关闭套接字
-    bool close()
+    bool Close()
     {
         if (_sockfd > 0)
         {
@@ -162,6 +164,6 @@ public:
 
 
 private:
-    _sockfd;
+    int _sockfd;
 };
 
