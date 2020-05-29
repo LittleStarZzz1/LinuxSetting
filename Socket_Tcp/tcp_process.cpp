@@ -58,7 +58,10 @@ int main(int argc, char* argv[])
 
                 CHECK_RET(new_sock.SendData(tmp));
             }
+            new_sock.Close();
+            exit(0);
         }
+        new_sock.Close();
 
     }
 
