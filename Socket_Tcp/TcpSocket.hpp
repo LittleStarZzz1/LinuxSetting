@@ -18,6 +18,16 @@ public:
 
     }
 
+    int GetFd()
+    {
+        return _sockfd;
+    }
+
+    void SetFd(int fd)
+    {
+        _sockfd = fd; 
+    }
+
     //创建套接字
     bool SocketCreate()
     {
