@@ -25,7 +25,7 @@ struct schedule;
 typedef struct coroutine
 {
     //回调函数
-    void* (*_call_back)(struct schedule_t* s, void* args);
+    void* (*_call_back)(struct schedule* s, void* args);
     //回调函数参数
     void* _args;
     //协程的上下文信息
@@ -40,24 +40,24 @@ typedef struct coroutine
 typedef struct schedule
 {
     //存储指向每个协程的指针数组
-    coroutine_t** coroutines;    
+    coroutine_t** _coroutines;    
     //当前处于运行态的协程在数组中的下标
     int _current_id;
     //数组中所存储的所有线程的最大下标
-    int _max_id;
+    int _maxid;
     //主控流程的上下文数据
     ucontext_t _main_ctx;
 }schedule_t;
-
 
 //创建协程调度器
 schedule_t* schedule_create();
 
 //创建协程
-int coroutine_create(schedule_t*, void* (*call_back)(schedule_t* s, void* args), void* args);
+int coroutine_create(schedule_t* s, void* (*call_back)(schedule_t* s, void* args), void* args);
 
 //协程执行函数
 static void* _main_func(schedule_t* s); 
+
 
 //获取协程当前状态
 enum State get_coState(schedule_t* s, int id);
@@ -65,8 +65,19 @@ enum State get_coState(schedule_t* s, int id);
 //启动协程
 void coroutine_running(schedule_t* s, int id);
 
+//让出cpu
+void coroutine_yield(schedule_t* s);
 
+//恢复CPU
+void coroutine_resume(schedule_t* s, int id);
 
+//删除协程
+void coroutine_delete(schedule_t* s, int id);
 
+//释放协程调度器
+void schedule_delete(schedule_t* s);
+
+//判断调度器中所有协程是否允许完毕
+int schedule_finish(schedule_t* s);
 
 #endif //_COROUTINE_H
