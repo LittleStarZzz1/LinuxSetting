@@ -1,16 +1,16 @@
 .PHONY:clean main
 
 cc=gcc
-OBJS=Coroutine.o main.o
-TARGET=svr
+OBJS=Coroutine.o net_sever.o 
+TARGET=net_svr net_cli
 
 all:$(TARGET)
 
-svr:$(OBJS)
+net_svr:$(OBJS)
 	$(cc) $^ -o $@
 
-cli:
-	gcc client.c -o cli
+net_cli:
+	gcc net_client.c -o net_cli
 
 clean:
 	rm -rf $(OBJS) main
