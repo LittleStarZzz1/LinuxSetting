@@ -1,5 +1,3 @@
-.PHONY:clean main
-
 cc=gcc
 OBJS=Coroutine.o net_sever.o 
 TARGET=net_svr net_cli
@@ -12,5 +10,6 @@ net_svr:$(OBJS)
 net_cli:
 	gcc net_client.c -o net_cli
 
+.PHONY:clean
 clean:
-	rm -rf $(OBJS) main
+	rm -rf *.o
